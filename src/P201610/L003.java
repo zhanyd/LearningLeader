@@ -77,10 +77,10 @@ public class L003 {
                                     buffer.put((byte) ('a' + i % 25));
                                 }
                                 buffer.put("\r\n".getBytes());
-                                buffer.flip();
                                 System.out.println("send another huge block data : " + sendDataSize);
                             }
 
+                            buffer.flip();
                             int writed = socketChannel.write(buffer);
                             System.out.println("writed " + writed);
                             if (buffer.hasRemaining()) {
