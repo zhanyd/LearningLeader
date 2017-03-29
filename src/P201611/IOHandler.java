@@ -1,7 +1,10 @@
 package P201611;
 
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -110,14 +113,42 @@ public class IOHandler implements Runnable{
             String reslut = LocalCmandUtil.callCmdAndgetResult(readLine);
             writeBuffer.put(reslut.getBytes("GBK"));
             writeBuffer.put("\r\nTelnet>".getBytes());
-        }else{
+            writeBuffer.flip();
+            writeToChannel();
+        }else if(readLine.startsWith("download")){
+           /* RandomAccessFile randomAccessFile = new RandomAccessFile("F://origin.txt","rw");
+            FileChannel fileChannel = randomAccessFile.getChannel();
+            int size = 100_000_000;
+            MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE,0,size);
+            for(int i = 0; i < size; i++){
+                mappedByteBuffer.put((byte)('a' + i % 25));
+            }*/
+
+            RandomAccessFile fromFile = new RandomAccessFile("F://origin.txt","rw");
+            FileChannel fromChannel = fromFile.getChannel();
+
+            RandomAccessFile toFile = new RandomAccessFile("F://tatget.txt","rw");
+            FileChannel toChannel = toFile.getChannel();
+
+            int position = 0;
+            long count = fromChannel.size();
+            //toChannel.transferFrom(fromChannel,position,count);
+            fromChannel.transferTo(position,count,toChannel);
+
+            fromChannel.close();
+            fromFile.close();
+            toChannel.close();
+            toFile.close();
+        }
+        else{
             for(int i =0; i < writeBuffer.capacity() - 10; i++){
                 writeBuffer.put((byte)('a' + i % 25));
             }
             writeBuffer.put("\r\nTelnet>".getBytes());
+            writeBuffer.flip();
+            writeToChannel();
         }
-        writeBuffer.flip();
-        writeToChannel();
+
     }
 
 
