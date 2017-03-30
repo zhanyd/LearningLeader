@@ -13,8 +13,8 @@ public class MainServer {
 			reactors[i] = new MyNIORector(executor);
 			reactors[i].start();
 		}
-		/*NIOAcceptor acceptor = new NIOAcceptor(9000,reactors);
-		acceptor.start();*/
+		NIOAcceptor acceptor = new NIOAcceptor(9000,reactors);
+		acceptor.start();
 	}
 
 }

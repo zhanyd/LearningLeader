@@ -64,7 +64,7 @@ public class TelnetIOHandler extends IOHandler{
 		}else{
 			data = new byte[1024*10];
 			ByteBuffer tempBuf = ByteBuffer.wrap(data);
-			for(int i = 0;i < tempBuf.capacity(); i++){
+			for(int i = 0;i < tempBuf.capacity() - 10; i++){
 				tempBuf.put((byte)('a' + i % 25));
 			}
 			
