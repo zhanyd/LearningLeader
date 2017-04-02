@@ -28,7 +28,7 @@ public abstract class IOHandler implements Runnable{
 	
 	public abstract void onConnected() throws IOException;
 	
-	public abstract void doHandler() throws IOException;
+	public abstract void doHandler() throws Exception;
 	
 	public void writeData(byte[] data) throws IOException{
 		while(!writingFlag.compareAndSet(false, true)){

@@ -1,10 +1,14 @@
 package p201612NoBlock;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.util.Arrays;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.Future;
 
 public class TelnetIOHandler extends IOHandler{
 
@@ -17,11 +21,14 @@ public class TelnetIOHandler extends IOHandler{
 	@Override
 	public void onConnected() throws IOException{
 		System.out.println(Thread.currentThread().getName() +  " connected from " + this.socketChannel.getRemoteAddress());
-		this.writeData("Welecome Leader.us Power Man Java Courde ... \r\nTelenet>".getBytes());
+		this.writeData(("Welecome Leader.us Power Man Java Courde ... \r\n" +
+				"1: find keyword in files \r\n" +
+				"2: quit \r\n" +
+				"Telenet>").getBytes());
 	}
 	
 	@Override
-	public void doHandler() throws IOException{
+	public void doHandler() throws Exception{
 		System.out.println(Thread.currentThread().getName() + " read....");
 		socketChannel.read(readBuffer);
 		int readEndPos = readBuffer.position();
@@ -55,21 +62,41 @@ public class TelnetIOHandler extends IOHandler{
 		}
 	}
 	
-	private void processCommand(String readedLine) throws IOException{
+	private void processCommand(String readedLine) throws Exception{
 		byte[] data = null;
-		if(readedLine.startsWith("dir")){
-			readedLine = "cmd /c " + readedLine;
-			data = (LocalCmandUtil.callCmdAndgetResult(readedLine)+"\r\nTelnet>").getBytes("GBK");
+		if(readedLine.startsWith("1")){
+			String[] strCommand = readedLine.split(" ");
+			if(strCommand.length != 3){
+				data = "输入参数有误".getBytes("GBK");
+			}else {
+				File[] files = new File(strCommand[1]).listFiles();
+				ForkJoinPool forkJoinPool = new ForkJoinPool();
+				L014 task = new L014(0,files.length - 1,strCommand[2]);
+				Future<Integer> allSum = forkJoinPool.submit(task);
+
+				System.out.println("strCommand : ");
+				Arrays.stream(strCommand).forEach(f->System.out.print(" " + f));
+				System.out.println(" strCommand[2] : " + strCommand[2]);
+				System.out.println(strCommand[2] + " 总共出现 " + allSum.get() + "次");
+
+				data = (strCommand[2] + " 总共出现 " + allSum.get() + "次 \r\n Telnet>").getBytes("GBK");
+			}
 			this.writeData(data);
+		}else if(readedLine.equals("2")){
+			data = new byte[100];
+			ByteBuffer tempBuf = ByteBuffer.wrap(data);
+			tempBuf.put("Bye My Power boy ..".getBytes());
+			this.writeData(data);
+			this.socketChannel.close();
 		}else{
 			data = new byte[100];
 			ByteBuffer tempBuf = ByteBuffer.wrap(data);
 			for(int i = 0;i < tempBuf.capacity() - 10; i++){
 				tempBuf.put((byte)('a' + i % 25));
 			}
-			
+
 			tempBuf.put("\r\nTelnet>".getBytes());
+			this.writeData(data);
 		}
-		this.writeData(data);
 	}
 }

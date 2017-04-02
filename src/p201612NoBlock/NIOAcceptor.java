@@ -20,8 +20,8 @@ public class NIOAcceptor extends Thread{
     public NIOAcceptor(int bindPort,MyNIORector[] reactors) throws IOException{
         this.reactors = reactors;
         serverSocketChannel = ServerSocketChannel.open();
-        serverSocketChannel.configureBlocking(true);
-        //serverSocketChannel.configureBlocking(false);
+        //serverSocketChannel.configureBlocking(true);
+        serverSocketChannel.configureBlocking(false);
         InetSocketAddress address = new InetSocketAddress(bindPort);
         serverSocketChannel.socket().bind(address);
         System.out.println(Thread.currentThread().getName() + " started at " + address);
@@ -41,6 +41,7 @@ public class NIOAcceptor extends Thread{
             			System.out.println("Connection Accepted " + socketChannel.getRemoteAddress());
             			int nextReator = ThreadLocalRandom.current().nextInt(0,reactors.length);
             			reactors[nextReator].registerNewClient(socketChannel);
+                        selectionKeySet.remove(key);
             		}
             	}
             }catch (IOException e){
