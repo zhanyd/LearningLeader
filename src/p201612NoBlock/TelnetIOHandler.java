@@ -74,12 +74,21 @@ public class TelnetIOHandler extends IOHandler{
 				L014 task = new L014(0,files.length - 1,strCommand[2]);
 				Future<Integer> allSum = forkJoinPool.submit(task);
 
+
 				System.out.println("strCommand : ");
 				Arrays.stream(strCommand).forEach(f->System.out.print(" " + f));
 				System.out.println(" strCommand[2] : " + strCommand[2]);
-				System.out.println(strCommand[2] + " 总共出现 " + allSum.get() + "次");
+				while (!allSum.isDone()){
+					//Thread.sleep(100);
+					System.out.println(" waiting forkJoinPool...");
+				}
+				if(allSum.isDone()){
 
-				data = (strCommand[2] + " 总共出现 " + allSum.get() + "次 \r\n Telnet>").getBytes("GBK");
+					System.out.println(strCommand[2] + " 总共出现 " + allSum.get() + "次");
+					data = (strCommand[2] + " 总共出现 " + allSum.get() + "次 \r\n Telnet>").getBytes("GBK");
+				}else{
+					data = ("forkJoinPool还没处理完完 \r\n Telnet>").getBytes("GBK");
+				}
 			}
 			this.writeData(data);
 		}else if(readedLine.equals("2")){
