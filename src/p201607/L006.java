@@ -12,8 +12,8 @@ import java.util.concurrent.Future;
  */
 public class L006 {
     public static void main(String[] args){
-        ExecutorService executorService = Executors.newCachedThreadPool();
-//        ExecutorService executorService = Executors.newFixedThreadPool(5);
+//        ExecutorService executorService = Executors.newCachedThreadPool();
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
 //        ExecutorService executorService = Executors.newSingleThreadExecutor();
         List<Future<String>> resultList = new ArrayList<Future<String>>();
 

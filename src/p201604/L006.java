@@ -1,6 +1,6 @@
 package p201604;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +14,7 @@ import java.util.stream.Stream;
  */
 public class L006 {
 
-    @Test
+   /* @Test
     public void example1(){
         List<String> myList = Arrays.asList("a1","a2","b1","c1","c2","c5");
         myList.stream().filter(s->s.startsWith("c"))
@@ -61,7 +61,7 @@ public class L006 {
 
 
         //System.out.println(Collectors.counting());
-    }
+    }*/
 
 
 }

@@ -3,18 +3,34 @@ package p201608;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Administrator on 2017/2/22 0022.
  */
-public class L001 {
+public class L002 {
 
     public static void main(String[] args) throws Exception{
-        try{
-            ServerSocket serverSocket = new ServerSocket(80);
-            while(true){
+        ExecutorService executorService= Executors.newFixedThreadPool(5);
+        ServerSocket serverSocket = new ServerSocket(80);
+        while(true){
+            executorService.execute(new RunServer(serverSocket));
+        }
+    }
+
+    static class RunServer implements Runnable{
+        ServerSocket serverSocket;
+        public RunServer(ServerSocket serverSocket){
+            this.serverSocket = serverSocket;
+        }
+        @Override
+        public void run(){
+            try{
+                System.out.println(Thread.currentThread().getName() + "is accept()......");
                 System.out.println("before serverSocket.accept()");
                 Socket socket = serverSocket.accept();
+                System.out.println(Thread.currentThread().getName() + "is processing......");
                 System.out.println("Request: " + socket.toString() + " connected");
                 LineNumberReader in = new LineNumberReader(new InputStreamReader(socket.getInputStream()));
                 String lineInput;
@@ -27,58 +43,28 @@ public class L001 {
                     }else{
                         if(lineInput.isEmpty()){
                             System.out.println("header finished");
-                            doResponseGet(requestPage,socket);
+                            doResponseGet(socket);
                         }
                     }
                 }
 
-
+            }catch(Exception e){
+                e.printStackTrace();
             }
-        }catch(Exception e){
-            e.printStackTrace();
         }
-
     }
 
-    private static void doResponseGet(String requestPage, Socket socket) throws IOException{
-        final String WEB_ROOT = "c:";
-        File theFile = new File(WEB_ROOT,requestPage);
+    private static void doResponseGet(Socket socket) throws IOException{
         OutputStream out = socket.getOutputStream();
-        if(theFile.exists()){
-            //从服务器根目录下找到用户请求的文件并发送回浏览器
-            InputStream fileIn = new FileInputStream(theFile);
-            byte[] buf = new byte[fileIn.available()];
-            fileIn.read(buf);
-            fileIn.close();
-            /*out.write(buf);
-            out.flush();
-            socket.close();*/
-
-            String msg2 = new String(buf, "GB2312");
-            String respone = "HTTP/1.1 200 OK\r\n";
-            respone += "Server: zhanyd Server/0.1\r\n";
-            //respone += "Content-Length: " + (msg2.length() - 8) + "\r\n"
-            // .000000000000;
-            respone += "\r\n";
-            respone += msg2;
-            out.write(respone.getBytes());
-            out.flush();
-            socket.close();
-
-            System.out.println("return Q2016.txt");
-        }else{
             String msg = "I can't find bao zang...\r\n";
             String respone = "HTTP/1.1 200 OK\r\n";
             respone += "Server: zhanyd Server/0.1\r\n";
             respone += "Content-Length: " + (msg.length()) + "\r\n";
-            //respone += "Content-Length: " + msg.length() + "\r\n";
             respone += "\r\n";
             respone += msg;
             out.write(respone.getBytes());
             out.flush();
             //socket.close();
             System.out.println("return I can't find bao zang...");
-        }
-
     }
 }
