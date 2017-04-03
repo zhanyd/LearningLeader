@@ -23,10 +23,11 @@ public class L014 extends RecursiveTask<Integer> {
     private int start;
     private int end;
 
-    public L014(int start, int end,String keyWords){
+    public L014(int start, int end,File[] files,String keyWords){
         this.keyWords = keyWords;
         this.start = start;
         this.end = end;
+        this.files = files;
     }
 
 
@@ -40,8 +41,8 @@ public class L014 extends RecursiveTask<Integer> {
             }
         }else{
             int middle = (start + end) / 2;
-            L014 leftTask = new L014(start,middle,keyWords);
-            L014 rightTask = new L014(middle + 1,end,keyWords);
+            L014 leftTask = new L014(start,middle,files,keyWords);
+            L014 rightTask = new L014(middle + 1,end,files,keyWords);
             invokeAll(leftTask,rightTask);
             try{
                 allSum = leftTask.get() + rightTask.get();
