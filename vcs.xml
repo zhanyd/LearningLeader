@@ -22,6 +22,10 @@
           <option name="url" value="https://github.com/peanuts6/AutoWeb.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/PowerShenli/MyDog.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="F:\IdeaProjects" />
