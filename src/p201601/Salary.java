@@ -7,10 +7,16 @@ import java.util.Comparator;
  */
 public class Salary {
 
-    public Salary(String name, int salary) {
-        this.name = name;
-        this.salary = salary;
-    }
+	private String name;
+	private int baseSalary;
+	private int bonus;
+	
+	
+	public Salary(String name,int baseSalary,int bonus){
+		this.name = name;
+		this.baseSalary = baseSalary;
+		this.bonus = bonus;
+	}
 
     public String getName() {
         return name;
@@ -20,17 +26,24 @@ public class Salary {
         this.name = name;
     }
 
-    private String name;
 
-    public int getSalary() {
-        return salary;
-    }
+    public int getBaseSalary() {
+		return baseSalary;
+	}
 
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
+	public void setBaseSalary(int baseSalary) {
+		this.baseSalary = baseSalary;
+	}
 
-    private int salary;
+	public int getBonus() {
+		return bonus;
+	}
+
+	public void setBonus(int bonus) {
+		this.bonus = bonus;
+	}
+
+
 
 
     /*@Override
@@ -39,18 +52,18 @@ public class Salary {
         return ((Salary)o).getSalary() - this.salary;
     }*/
 
-    public static class SalaryCompare implements Comparator<Salary> {
+   /* public static class SalaryCompare implements Comparator<Salary> {
 
         @Override
         public int compare(Salary o1, Salary o2) {
             return o1.getSalary() - o2.getSalary();
         }
 
-    }
+    }*/
 
     public String toString(){
-        return this.name + ":" + this.salary;
-    }
+		return "name = " + name + " （baseSalary*13+bonus）=" + (baseSalary*13 + bonus);
+	}
 
 
 }
