@@ -15,14 +15,14 @@ public class L20170702 {
 	
 	
 	public static void putMyItem(int index,MyItem item){
-		System.out.println(Integer.toBinaryString(item.getType()));
+		/*System.out.println(Integer.toBinaryString(item.getType()));
 		System.out.println(Integer.toBinaryString(item.getColor() << 8));
 		System.out.println(Integer.toBinaryString(item.getPrice() << 16));
 		System.out.println(item.getType());
 		System.out.println(item.getColor() << 8);
 		System.out.println(item.getPrice() << 16);
 		int a = (item.getType()) + (item.getColor() << 8) + (item.getPrice() << 16);
-		System.out.println(a);
+		System.out.println(a);*/
 		storeByteArry[index] = (item.getType()) + (item.getColor() << 8) + (item.getPrice() << 16);
 		System.out.println(Integer.toBinaryString(storeByteArry[index]));
 	}
