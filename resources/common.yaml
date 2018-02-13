@@ -1,0 +1,14 @@
+path: f://user.txt
+user:
+    name:zhan
+    age:18
+    city:wenzhou
+    road:huilong
+spring:
+    application:
+        name: cruncher
+    datasource:
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost/test
+server:
+    port: 9000

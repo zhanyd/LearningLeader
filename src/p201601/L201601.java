@@ -9,16 +9,16 @@ public class L201601 {
     public static void main(String[] args){
         int[] arry = {4,6,2,1,67,78,99,17,18,23,55,17,33};
 
-        Salary[] salarArry = {new Salary("zhangsang",34),new Salary("lisi",22),new Salary("wangwu",89)
-                ,new Salary("zhaoliu",66)};
+        Salary[] salarArry = {new Salary("zhangsang",34,12),new Salary("lisi",22,12),new Salary("wangwu",89,12)
+                ,new Salary("zhaoliu",66,12)};
 
         for (Salary salary: salarArry) {
-            System.out.println(salary.getName() + " " + salary.getSalary());
+            System.out.println(salary.getName() + " " + salary.getBaseSalary());
         }
         System.out.println("-----------------------");
         maopaoSalary(salarArry);
         for (Salary salary: salarArry) {
-            System.out.println(salary.getName() + " " + salary.getSalary());
+            System.out.println(salary.getName() + " " + salary.getBaseSalary());
         }
 
         //maopao(arry);
@@ -36,7 +36,7 @@ public class L201601 {
         for(int i=0; i<arry.length - 1; i++){
             noswap = true;
             for(int j=0; j<arry.length - 1 - i; j++){
-                if(arry[j].getSalary() >= arry[j+1].getSalary()){
+                if(arry[j].getBaseSalary() >= arry[j+1].getBaseSalary()){
                     temp = arry[j];
                     arry[j] = arry[j+1];
                     arry[j+1] = temp;

@@ -49,14 +49,14 @@ public class L001 {
 
     public static void printTreeSetSalary(){
 
-        Salary salary1 = new Salary("zhangsang",32);
-        Salary salary2 = new Salary("zhangsan23",35);
-        Salary salary3 = new Salary("zhangsan4g",5);
-        Salary salary4 = new Salary("zhangsang8",88);
-        Salary salary5 = new Salary("zhangsang",31);
+        Salary salary1 = new Salary("zhangsang",32,12);
+        Salary salary2 = new Salary("zhangsan23",35,12);
+        Salary salary3 = new Salary("zhangsan4g",5,12);
+        Salary salary4 = new Salary("zhangsang8",88,12);
+        Salary salary5 = new Salary("zhangsang",31,12);
 
 
-        Set treeSet = new TreeSet(new Salary.SalaryCompare());
+      /*  Set treeSet = new TreeSet(new Salary.SalaryCompare());
         treeSet.add(salary1);
         treeSet.add(salary2);
         treeSet.add(salary3);
@@ -66,6 +66,6 @@ public class L001 {
         Iterator it  = treeSet.iterator();
         while(it.hasNext()){
             System.out.println(it.next());
-        }
+        }*/
     }
 }
