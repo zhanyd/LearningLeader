@@ -58,6 +58,10 @@
           <option name="url" value="https://github.com/zhanyd/javaLearningNotes.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://gitee.com/gary88/hp_edu.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="F:\IdeaProjects" />
