@@ -28,9 +28,11 @@ public class L004 {
     public static void main(String[] args) throws Exception{
 
         long beginTime = System.currentTimeMillis();
-        //List<Salary> list = initSalary();
+        List<Salary> list = initSalary();
+        long endInitSalaryTime = System.currentTimeMillis();
+        System.out.println("initSalary cost : " + (endInitSalaryTime - beginTime));
         long stratWriteTime = System.currentTimeMillis();
-        //writeToFileWriter(list);
+        writeToFileWriter(list);
         //writeToFileFileChannel(list);
         //writeToFileFileMappedByteBuffer(list);
         //writeToMappedByteBufferF();
@@ -38,13 +40,13 @@ public class L004 {
         //writeToBufferedWriter("F://salaryWriterChannel.txt");
         long endWriteTime = System.currentTimeMillis();
         System.out.println("write cost : " + (endWriteTime - stratWriteTime));
-        //readFromFileToMap("f:\\salaryWriter.txt");
+        readFromFileToMap("f:\\salaryWriterChannel.txt");
         // readFromFileToMap("F://salaryWriterChannel.txt");
         //readFromMappedByteBuffer();
         //readFromBufferedReaderStream("F://salaryWriterChannel.txt");
        //System.out.println("-------------");
         //readFromBufferedReaderStreamThread("F://salaryWriterChannel.txt");
-        readFromBufferedReaderStreamByForkJoin("F://salaryWriterChannel.txt");
+        //readFromBufferedReaderStreamByForkJoin("F://salaryWriterChannel.txt");
         System.out.println("read cost : " + (System.currentTimeMillis() - endWriteTime));
         System.out.println("all cost : " + (System.currentTimeMillis() - beginTime));
     }
@@ -156,7 +158,7 @@ public class L004 {
      */
     public static void writeToFileWriter( List<Salary> salaryList) throws Exception{
 
-        FileOutputStream fileOutputStream = new FileOutputStream("f:\\salaryWriter.txt");
+        FileOutputStream fileOutputStream = new FileOutputStream("f:\\salaryWriterChannel.txt");
         OutputStreamWriter writer = new OutputStreamWriter(fileOutputStream,"utf-8");
 
         for(Salary salary : salaryList){

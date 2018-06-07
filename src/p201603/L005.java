@@ -26,7 +26,7 @@ public class L005 {
             System.out.println(str2);
         }
 
-        Map ma;
+
 
     }
 }
